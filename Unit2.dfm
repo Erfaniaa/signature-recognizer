@@ -405,4 +405,11 @@ object Form2: TForm2
     TabOrder = 3
     Value = 0
   end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 30
+    OnTimer = Timer1Timer
+    Left = 176
+    Top = 224
+  end
 end

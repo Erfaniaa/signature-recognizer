@@ -6,7 +6,7 @@ object Form1: TForm1
   BorderStyle = bsSingle
   Caption = #1578#1588#1582#1740#1589' '#1607#1608#1740#1578' '#1575#1586' '#1591#1585#1740#1602' '#1575#1605#1590#1575
   ClientHeight = 430
-  ClientWidth = 476
+  ClientWidth = 210
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -394,8 +394,8 @@ object Form1: TForm1
   end
   object Label6: TLabel
     AlignWithMargins = True
-    Left = 7
-    Top = 398
+    Left = 5
+    Top = 407
     Width = 197
     Height = 16
     Alignment = taCenter
@@ -423,7 +423,7 @@ object Form1: TForm1
   end
   object Button2: TButton
     Left = 51
-    Top = 326
+    Top = 345
     Width = 105
     Height = 25
     Hint = #1579#1576#1578' '#1740#1575' '#1578#1594#1740#1740#1585' '#1575#1605#1590#1575
@@ -435,7 +435,7 @@ object Form1: TForm1
   end
   object Button3: TButton
     Left = 51
-    Top = 358
+    Top = 376
     Width = 105
     Height = 25
     Hint = #1605#1588#1575#1607#1583#1607#8207#1740' '#1575#1605#1590#1575#1607#1575#1740' '#1579#1576#1578' '#1588#1583#1607
@@ -457,11 +457,36 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = Button4Click
   end
-  object Memo1: TMemo
+  object CheckBox1: TCheckBox
+    Left = 59
+    Top = 322
+    Width = 97
+    Height = 17
+    Caption = #1606#1605#1575#1740#1588' '#1583#1602#1740#1602' '#1606#1578#1575#1740#1580
+    TabOrder = 4
+    OnClick = CheckBox1Click
+  end
+  object GroupBox1: TGroupBox
     Left = 216
     Top = 8
-    Width = 254
+    Width = 263
     Height = 414
-    TabOrder = 4
+    Caption = #1575#1605#1578#1740#1575#1586' '#1588#1576#1575#1607#1578' '#1575#1605#1590#1575' '#1576#1607' '#1606#1605#1608#1606#1607#8207#1607#1575#1740' '#1605#1608#1580#1608#1583
+    TabOrder = 5
+    object Memo1: TMemo
+      Left = 2
+      Top = 15
+      Width = 259
+      Height = 397
+      Align = alClient
+      TabOrder = 0
+    end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 30
+    OnTimer = Timer1Timer
+    Left = 432
+    Top = 368
   end
 end

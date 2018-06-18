@@ -31,7 +31,7 @@ const
   PenFColor = clWebOrange;
   PenSize = 3;
   PenSize2 = PenSize + 3;
-  D = 28;
+  D = 33;
   Cha: array [1..4] of string[1] = ('', '0', '#', '$');
 
 var
@@ -117,16 +117,29 @@ begin
   if J < I then
   begin
     Inc (J);
-    if (Dis (Pnt[J].X, Pnt[J].Y, Pnt[J - 1].X, Pnt[J - 1].Y) <= D) and (J <> 1) then
-      Image1.Canvas.LineTo (Pnt[J].X, Pnt[J].Y)
-    else
+    while ((J <= I) and (Pnt[J].X > 1000)) do
     begin
-      Inc (M);
-      Image1.Canvas.TextOut (Pnt[J].X + 5, Pnt[J].Y + 2, IntToStr (M));
-      Pt[1, M] := Pnt[J];
-      Pt[2, M] := Pnt[J - 1];
+      Inc (J);
+      Image1.Canvas.MoveTo (Pnt[J].X, Pnt[J].Y);
     end;
-    Image1.Canvas.MoveTo (Pnt[J].X, Pnt[J].Y);
+    while ((J <= I) and (J > 1) and (Pnt[J - 1].X > 1000)) do
+    begin
+      Inc (J);
+      Image1.Canvas.MoveTo (Pnt[J].X, Pnt[J].Y);
+    end;
+    if (J <= I) then
+    begin
+      if (Dis (Pnt[J].X, Pnt[J].Y, Pnt[J - 1].X, Pnt[J - 1].Y) <= D) and (J <> 1) then
+        Image1.Canvas.LineTo (Pnt[J].X, Pnt[J].Y)
+      else
+      begin
+        Inc (M);
+        Image1.Canvas.TextOut (Pnt[J].X + 5, Pnt[J].Y + 2, IntToStr (M));
+        Pt[1, M] := Pnt[J];
+        Pt[2, M] := Pnt[J - 1];
+      end;
+      Image1.Canvas.MoveTo (Pnt[J].X, Pnt[J].Y);
+    end;
   end
   else
   begin

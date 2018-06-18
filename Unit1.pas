@@ -20,6 +20,9 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
+    Timer1: TTimer;
+    CheckBox1: TCheckBox;
+    GroupBox1: TGroupBox;
     Memo1: TMemo;
     procedure Image1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -32,6 +35,8 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure CheckBox1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -52,6 +57,12 @@ type
   end;
   PPerson = ^TPerson;
 
+  TMouseState = record
+    pos: TPoint;
+    lastvalid: integer;
+    down: boolean;
+  end;
+
 const
   PenColor = clBlue;
   PenSize = 3;
@@ -63,18 +74,19 @@ const
 
 var
   Form1: TForm1;
-  J, J2, N, T, Angles, cnt1, cnt3: Integer;
+  J, J2, N, T, Angles, cnt1, cnt3, pntcnt: Integer;
   Count: Real;
   //B: array [0..10000 - 1] of Boolean;
-  Pnt1: array [1..10000] of TPoint;
-  Pnt2: array [1..10000] of TPoint;
-  Pnt3: array [1..10000] of TPoint;
+  Pnt1: array [1..100000] of TPoint;
+  Pnt2: array [1..100000] of TPoint;
+  Pnt3: array [1..100000] of TPoint;
   //Pnt3: array [1..100, 1..100000] of TPoint;
   Point1, Point2, Last: TPoint;
   Angle, Ang: Real;
   //S: string;
   Persons: array [0..HashMod - 1] of TPerson;
   Similars: TList;
+  MouseState: TMouseState;
 
 implementation
 
@@ -237,15 +249,27 @@ begin
   end;
 end;
 
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  Inc(cnt1);
+  Pnt1[cnt1] := MouseState.pos;
+  if not MouseState.down then
+    pnt1[cnt1] := Point(10000, 10000)
+  else
+    MouseState.lastvalid := cnt1;
+end;
+
 procedure TForm1.Button1Click(Sender: TObject);
 var
   F: TextFile;
-  I, Z, M, A, AA, Ch, C, Temp, NameLen, h, cnt2: Integer;
-  Cmp, Mn, Mx: Real;
+  I, Z, M, A, AA, Ch, C, Temp, NameLen, h, cnt2, co2: Integer;
+  Cmp, Mn, Mx, distmp, Cmp2: Real;
   Name, Owner: UTF8String;
   v1, v2, v3: TPoint;
   p: TPerson;
 begin
+  Timer1.Enabled := false;
+  cnt1 := MouseState.lastvalid;
   Label1.Caption := 'صاحب امضا: -';
   Inc (T);
   Label2.Caption := IntToStr (T);
@@ -301,19 +325,32 @@ begin
     Mx := Max (J, I);
     for z := 1 to cnt1 do
     begin
-      Cmp := Cmp + Dis (Pnt1[z].X - Point1.X, Pnt1[z].Y - Point1.Y,
+      distmp := Dis (Pnt1[z].X - Point1.X, Pnt1[z].Y - Point1.Y,
       Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0))].X, Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0))].Y);
+      if distmp > 1000 then
+        distmp := 100;
+      if ((Pnt1[z].X > 1000) and (Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0))].X > 1000)) then
+        distmp := 0;
+      Cmp := Cmp + distmp;
     end;
+    co2 := 0;
+    Cmp2 := 0;
     for z := 2 to cnt1 do
     begin
-      v1 := Substract(Pnt1[z], Pnt1[z - 1]);
-      v2 := Substract(Pnt2[z], Pnt2[z - 1]);
-      //setSize(v1);
-      //setSize(v2);
-      v3 := Substract(v2, v1);
-      Cmp := Cmp + getSize(v3);
+      if ((Pnt1[z].X <= 1000) and (Pnt1[z - 1].X <= 1000)) then
+      if (Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0))].X <= 1000) then
+      if (Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0)) - 1].X <= 1000) then
+      begin
+        v1 := Substract(Pnt1[z], Pnt1[z - 1]);
+        v2 := Substract(Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0))], Pnt2[Trunc (1 + (Z - 1) * cnt2 / (cnt1 + 0.0)) - 1]);
+        //setSize(v1);
+        //setSize(v2);
+        v3 := Substract(v2, v1);
+        Cmp2 := Cmp2 + getSize(v3) * 10;
+        Inc(co2);
+      end;
     end;
-    Cmp := Cmp / cnt1;
+    Cmp := (Cmp / cnt1) + (Cmp2 / co2);
     Persons[h].Name := Name;
     Persons[h].Similarity := (Persons[h].Similarity * Persons[h].Count + Cmp) / (Persons[h].Count + 1);
     Inc(Persons[h].Count);
@@ -362,7 +399,7 @@ begin
   for i := 0 to Similars.Count - 1 do
   begin
     p := PPerson(Similars[i])^;
-    Memo1.Lines.Add(p.Name + ': ' + FloatToStr(p.Similarity));
+    Memo1.Lines.Add(p.Name + ': ' + FloatToStr(2000 - p.Similarity));
   end;
   Similars.Free;
   //Label2.Caption := IntToStr (Point1.X) + ' ' + IntToStr (Point1.Y);
@@ -371,6 +408,7 @@ begin
   Label1.Caption := 'صاحب امضا: ' + Owner;
   cnt1 := 0;
   N := 0;
+  pntcnt := 0;
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
@@ -391,11 +429,20 @@ begin
   Angle := 0;
   Angles := 0;
   Label3.Caption := '0';
+  Timer1.Enabled := False;
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
   Form4.Show;
+end;
+
+procedure TForm1.CheckBox1Click(Sender: TObject);
+begin
+  if (CheckBox1.Checked) then
+    Form1.Width := 480
+  else
+    Form1.Width := 216;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -411,18 +458,29 @@ begin
   Image1.Canvas.LineTo (X, Y);
   Image1.Canvas.Ellipse (X - 1, Y - 1, X + 1, Y + 1);
   Inc (N);
-  Count := 0;
+  (*Count := 0;
   Inc (cnt1);
   Pnt1[cnt1] := Point (X, Y);
-  Last := Point (X, Y);
+  Last := Point (X, Y);*)
   //Label6.Caption := IntToStr (N);
+  MouseState.pos := Point(x, y);
+  MouseState.down := SSLeft in Shift;
+  if MouseState.down then
+    Timer1.Enabled := True;
 end;
 
 procedure TForm1.Image1MouseMove(Sender: TObject; Shift: TShiftState; X,
   Y: Integer);
 begin
   //Label4.Caption := IntToStr (X) + ' ' + IntToStr (Y);
-  if SSLeft in Shift then
+  MouseState.pos := Point(x, y);
+  MouseState.down := SSLeft in Shift;
+  if MouseState.down then
+  begin
+    Timer1.Enabled := True;
+    Image1.Canvas.LineTo (X, Y);
+  end;
+  (*if SSLeft in Shift then
   begin
     {if (Count mod D = 0) or ((not B[Count div D]) and (Count > (Count div D) * Count)) then
     begin
@@ -456,7 +514,7 @@ begin
     if Count >= D then
       Angle := ATan (X - Last.X, Y - Last.Y);
     Last := Point (X, Y);
-  end;
+  end;*)
 end;
 
 end.
