@@ -5,15 +5,15 @@
     <Transaction>2010/08/11 14:30:54.153.dfm,C:\Users\pc\Documents\RAD Studio\Projects\Unit1.dfm=I:\OCR 2\Unit1.dfm</Transaction>
     <Transaction>2010/08/11 14:30:55.356.dproj,C:\Users\pc\Documents\RAD Studio\Projects\Project1.dproj=I:\OCR 2\Project1.dproj</Transaction>
     <Transaction>2010/10/04 17:35:19.249.dproj,I:\OCR 2\Project1.dproj=I:\Signature\Signature.dproj</Transaction>
-    <Transaction>2010/10/04 17:39:43.266.dfm,I:\OCR 2\Unit1.dfm=</Transaction>
     <Transaction>2010/10/04 17:39:43.266.pas,I:\OCR 2\Unit1.pas=</Transaction>
-    <Transaction>2010/10/04 17:39:43.283.pas,I:\OCR 2\Unit2.pas=</Transaction>
+    <Transaction>2010/10/04 17:39:43.266.dfm,I:\OCR 2\Unit1.dfm=</Transaction>
     <Transaction>2010/10/04 17:39:43.283.dfm,I:\OCR 2\Unit2.dfm=</Transaction>
-    <Transaction>2010/10/04 17:39:43.360.pas,I:\OCR 2\Unit3.pas=</Transaction>
+    <Transaction>2010/10/04 17:39:43.283.pas,I:\OCR 2\Unit2.pas=</Transaction>
     <Transaction>2010/10/04 17:39:43.360.dfm,I:\OCR 2\Unit3.dfm=</Transaction>
+    <Transaction>2010/10/04 17:39:43.360.pas,I:\OCR 2\Unit3.pas=</Transaction>
     <Transaction>2010/10/04 17:39:43.375.pas,I:\OCR 2\Unit4.pas=</Transaction>
     <Transaction>2010/10/04 17:39:43.375.dfm,I:\OCR 2\Unit4.dfm=</Transaction>
-    <Transaction>2010/10/04 17:46:05.930.dfm,I:\Signature\Unit4.dfm=</Transaction>
     <Transaction>2010/10/04 17:46:05.930.pas,I:\Signature\Unit4.pas=</Transaction>
+    <Transaction>2010/10/04 17:46:05.930.dfm,I:\Signature\Unit4.dfm=</Transaction>
   </Transactions>
 </BorlandProject>

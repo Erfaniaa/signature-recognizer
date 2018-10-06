@@ -399,7 +399,7 @@ begin
   for i := 0 to Similars.Count - 1 do
   begin
     p := PPerson(Similars[i])^;
-    Memo1.Lines.Add(p.Name + ': ' + FloatToStr(2000 - p.Similarity));
+    Memo1.Lines.Add(p.Name + ': ' + FloatToStrF(2000 - p.Similarity, ffNumber, 2, 2));
   end;
   Similars.Free;
   //Label2.Caption := IntToStr (Point1.X) + ' ' + IntToStr (Point1.Y);

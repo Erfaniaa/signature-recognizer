@@ -394,9 +394,9 @@ object Form1: TForm1
   end
   object Label6: TLabel
     AlignWithMargins = True
-    Left = 5
+    Left = 3
     Top = 407
-    Width = 197
+    Width = 207
     Height = 16
     Alignment = taCenter
     BiDiMode = bdRightToLeft
@@ -408,6 +408,7 @@ object Form1: TForm1
     Font.Style = []
     ParentBiDiMode = False
     ParentFont = False
+    Visible = False
   end
   object Button1: TButton
     Left = 51
@@ -458,9 +459,9 @@ object Form1: TForm1
     OnClick = Button4Click
   end
   object CheckBox1: TCheckBox
-    Left = 59
+    Left = 40
     Top = 322
-    Width = 97
+    Width = 116
     Height = 17
     Caption = #1606#1605#1575#1740#1588' '#1583#1602#1740#1602' '#1606#1578#1575#1740#1580
     TabOrder = 4

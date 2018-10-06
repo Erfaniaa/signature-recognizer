@@ -13,6 +13,7 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
+  TStyleManager.TrySetStyle('Smokey Quartz Kamri');
   Application.Title := 'تشخیص هویت از روی نمونه امضا';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm2, Form2);
